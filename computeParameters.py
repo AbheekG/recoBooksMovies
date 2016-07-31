@@ -13,7 +13,7 @@ print(isSmall)
 if(isSmall):
 	directory = 'data/mSmall/'
 	iterations = 10
-	step_size = 100
+	step_size = 1000
 else:
 	directory = 'data/mLarge/'
 	iterations = 1
@@ -22,10 +22,11 @@ print('Loading data ...')
 nMovies, nUsers, Links, Movies, Means = getData.loadData(directory, data_type)
 print('Data loaded')
 
-n = 300
+n = 500
 lamda = 0
-Lamdas = np.array([0, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30, 100, 300, 1000])
-alpha = 0.002
+Lamdas = np.array([0, 0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30, 100, 300, 1000])
+#Lamdas = np.array([5, 10, 20, 40, 70, 130])
+alpha = 0.001
 X_init = np.random.rand(nMovies, n)
 Theta_init = np.random.rand(nUsers, n)
 
@@ -56,9 +57,9 @@ print(end - start)
 # Just printing some data
 it = np.array(range(step_size, step_size*(Cost_train.shape[0] + 1), step_size))
 #print(Cost)
-plt.plot(it[:Cost_cv.shape[0]], Cost_train[:Cost_cv.shape[0]], 'b')
-plt.plot(it[:Cost_cv.shape[0]], Cost_cv, 'g')
-plt.plot(it[:Cost_test.shape[0]], Cost_test, 'r')
+plt.plot(it[-Cost_cv.shape[0]:], Cost_train[-Cost_cv.shape[0]:], 'b')
+plt.plot(it[-Cost_cv.shape[0]:], Cost_cv, 'g')
+plt.plot(it[-Cost_test.shape[0]:], Cost_test, 'r')
 plt.show()
 
 # User movie recommendation check
